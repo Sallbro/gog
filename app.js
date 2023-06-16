@@ -6,7 +6,7 @@ const app = express();
 const cheerio = require('cheerio');
 const dotenv = require('dotenv');
 dotenv.config();
-const port = 3002;
+const port = process.env['PORT']  || 9331;
 
 app.get('/', (req, res) => {
     res.send('Welcome');
@@ -550,5 +550,5 @@ app.get('/test', async (req, res) => {
     });
 });
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    // console.log(`Example app listening on port ${port}`);
 });
