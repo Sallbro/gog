@@ -6,7 +6,7 @@ const app = express();
 const cheerio = require('cheerio');
 const dotenv = require('dotenv');
 dotenv.config();
-const port = process.env['PORT']  || 9331;
+const port = process.env['PORT'] || 9331;
 
 app.get('/', (req, res) => {
     res.send('Welcome');
@@ -124,9 +124,9 @@ app.get('/game/pageno/:no', (req, res) => {
 
             //price 
             let price = {};
-            price.price = x.price.base;
-            price.original_price = x.price.final;
-            price.discount = x.price.discount;
+            price.price = x.price?.base;
+            price.original_price = x.price?.final;
+            price.discount = x.price?.discount;
             obj_result.price = price;
 
             // genres
@@ -183,7 +183,7 @@ app.get('/game', (req, res) => {
                 url = url.replace("${folio}", 1);
             }
         }
-
+        console.log(url);
     }
     else if (releaseStatuses != undefined && releaseStatuses != "") {
         const arr_releaseStatuses = releaseStatuses.split(",");
@@ -329,9 +329,9 @@ app.get('/game', (req, res) => {
 
             //price 
             let price = {};
-            price.price = x.price.base;
-            price.original_price = x.price.final;
-            price.discount = x.price.discount;
+            price.price = x.price?.base;
+            price.original_price = x.price?.final;
+            price.discount = x.price?.discount;
             obj_result.price = price;
 
             // genres
@@ -550,5 +550,6 @@ app.get('/test', async (req, res) => {
     });
 });
 app.listen(port, () => {
-    // console.log(`Example app listening on port ${port}`);
+    console.log(`Example app listening on port ${port}`);
 });
+
