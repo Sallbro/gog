@@ -1,0 +1,22 @@
+{
+  "name": "gog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "description": "",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "node": "^20.2.0",
+    "nodemon": "^2.0.22"
+  }
+}
