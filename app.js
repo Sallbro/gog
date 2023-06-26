@@ -183,7 +183,6 @@ app.get('/game', (req, res) => {
                 url = url.replace("${folio}", 1);
             }
         }
-        console.log(url);
     }
     else if (releaseStatuses != undefined && releaseStatuses != "") {
         const arr_releaseStatuses = releaseStatuses.split(",");
@@ -204,7 +203,7 @@ app.get('/game', (req, res) => {
     }
     else if (features != undefined && features != "") {
         const arr_features = features.split(",");
-        if (arr_features.length > 1) {
+        if (arr_features.length > 0) {
             let str_features = `&features=in%3A${arr_features[0]}`;
             for (let i = 1; i < arr_features.length; i++) {
                 str_features += `%2C${arr_features[i]}`;
@@ -222,7 +221,7 @@ app.get('/game', (req, res) => {
     }
     else if (systems != undefined && systems != "") {
         const arr_systems = systems.split(",");
-        if (arr_systems.length > 1) {
+        if (arr_systems.length > 0) {
             const index = arr_systems.indexOf("mac");
             if (index !== -1) {
                 arr_systems[index] = 'osx';
