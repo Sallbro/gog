@@ -1,4 +1,4 @@
-const { default: axios } = require('axios');
+const { axios } = require('axios');
 const { Cheerio } = require('cheerio');
 const express = require('express');
 const { features } = require('process');
@@ -7,10 +7,6 @@ const cheerio = require('cheerio');
 const dotenv = require('dotenv');
 dotenv.config();
 const port = process.env['PORT'] || 9331;
-
-app.get('/', (req, res) => {
-    res.send('Welcome');
-});
 
 //search 
 app.get('/game/search/:sugg', (req, res) => {
@@ -82,7 +78,8 @@ app.get('/game/search/:sugg', (req, res) => {
         // res.send(response.data);
         res.end();
     }).catch((err) => {
-        console.log("error", err);
+        res.status(400).send("sommething went wrong!");
+
     });
 
 });
@@ -150,7 +147,7 @@ app.get('/game/pageno/:no', (req, res) => {
         // res.send(response.data);
         res.end();
     }).catch((err) => {
-        console.log("error", err);
+        res.status(400).send("sommething went wrong!");
     });
 
 });
@@ -354,7 +351,7 @@ app.get('/game', (req, res) => {
         // res.send(response.data);
         res.end();
     }).catch((err) => {
-        console.log("error", err);
+        res.status(400).send("sommething went wrong!");
     });
 
 });
@@ -472,82 +469,11 @@ app.get("/game/:game_id", (req, res) => {
         res.send(obj_result);
         res.end();
     }).catch((err) => {
-        console.log("error:", err);
+        res.status(400).send("sommething went wrong!");
     });
 });
 
-// test 
-app.get('/test', async (req, res) => {
-    const url = "https://catalog.gog.com/v1/catalog?limit=100&order=desc%3Atrending&productType=in%3Agame%2Cpack%2Cdlc%2Cextras&page=1&countryCode=IN&locale=en-US&currencyCode=USD"
 
-    const url2 = "https://catalog.gog.com/v1/catalog?limit=200&genres=in%3Aaction&order=desc%3Atrending&productType=in%3Agame%2Cpack%2Cdlc%2Cextras&page=1&countryCode=IN&locale=en-US&currencyCode=USD"
-
-    await axios.get(url2).then((response) => {
-        console.log("pages-", response.data.pages);
-        // let page = response.data.pages;
-        // page = page - 1;
-        // const url3 = `https://catalog.gog.com/v1/catalog?limit=${Number(page) * 48}&genres=in%3Aaction&order=desc%3Atrending&productType=in%3Agame%2Cpack%2Cdlc%2Cextras&page=1&countryCode=IN&locale=en-US&currencyCode=USD`;
-        // console.log("url3:-",url3);
-        // axios.get(url3).then((response) => {
-        const result = [];
-        for (x of response.data.products) {
-            let obj_result = {};
-            obj_result.name = x.slug;
-            obj_result.features = [];
-            for (y of x.features) {
-                obj_result.features.push(y.name);
-            }
-            obj_result.developers = x.developers;
-            obj_result.publishers = x.publishers;
-            obj_result.operatingSystems = x.operatingSystems;
-
-            //images
-            let images = {};
-            images.coverHorizontal = x.coverHorizontal;
-            images.coverVertical = x.coverVertical;
-            obj_result.images = images
-            //  screenshots
-            const screenshots = [];
-            for (z of x.screenshots) {
-                screenshots.push(z?.replace("_{formatter}", ""));
-            }
-            obj_result.screenshots = screenshots;
-
-            //releaseDate
-            obj_result.ReleaseDate = x.releaseDate;
-
-            //price 
-            let price = {};
-            price.price = x.price?.base;
-            price.original_price = x.price?.final;
-            price.discount = x.price?.discount;
-            obj_result.price = price;
-
-            // genres
-            const genres = [];
-            for (gnr of x.genres) {
-                genres.push(gnr.name);
-            }
-            obj_result.genres = genres;
-
-            // tags
-            const tags = [];
-            for (tgs of x.tags) {
-                tags.push(tgs.name);
-            }
-            obj_result.tags = tags;
-
-            //final result
-            result.push(obj_result);
-        }
-        res.send(result);
-        // res.send(response.data);
-        res.end();
-    }).catch((err) => {
-        console.log("error", err);
-        res.end();
-    });
-});
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
