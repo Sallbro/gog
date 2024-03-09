@@ -8,6 +8,16 @@ const dotenv = require('dotenv');
 dotenv.config();
 const port = process.env['PORT'] || 9331;
 
+//initial request
+app.get('/', (req, res) => {
+    try {
+        res.status(200).send("succ!");
+
+    } catch (err) {
+        res.status(400).send("error!");
+    }
+});
+
 //search 
 app.get('/game/search/:sugg', (req, res) => {
     const sugg = req.params.sugg;
