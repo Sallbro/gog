@@ -1,4 +1,4 @@
-const { axios } = require('axios');
+const axios = require('axios');
 const { Cheerio } = require('cheerio');
 const express = require('express');
 const { features } = require('process');
